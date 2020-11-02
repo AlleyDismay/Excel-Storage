@@ -1,0 +1,56 @@
+Sub PDFMailMerge()
+
+' Using Word Object Library... Didn't work
+
+Set WordApp = CreateObject("Word.Application")
+
+WordApp.Visible = True
+
+'' Right. This all sends right as an invisible mail.
+
+' Set OutApp = CreateObject("Outlook.Application")
+
+' Set Mail = OutApp.CreateItem(olMailItem)
+
+' Mail.Attachments.Add ActiveWorkbook.FullName, olByValue, 1
+' Mail.Recipients.Add "anon@hotmail.com"
+' Mail.Send
+' Mail.Send ' Can't send twice.
+' OutApp.Quit
+
+Set Doc = WordApp.Documents.Open(ActiveWorkbook.Path & "\Mail Merge Receipt.docx")
+
+' Word VBA for making and sending PDFs by Mail Merge.
+
+Set Merge = Doc.MailMerge
+
+Dim SourceName As String
+
+SourceName = ActiveWorkbook.Path & "\src.xlsx"
+
+' It breaks weird if you give it a proper SQL Statement, but one that's got wrong tables and stuff, like using `Sheet1$`.
+
+Merge.MainDocumentType = wdEMail ' wdNotAMergeDocument
+
+    Merge.OpenDataSource _
+    Name:=SourceName, _
+        Connection:="Data Source=" & SourceName, _
+        SQLStatement:="SELECT * FROM `'sheet1$'`"
+    With Merge
+        .Destination = wdSendToNewDocument
+        .SuppressBlankLines = True
+        .Execute Pause:=False
+    End With
+
+    ' It's saving as a DOCX... Why? wdFormatPDF doesn't work, while "17" does... Constants issues. Object Library doesn't seem to fix...
+
+    Merge.DataSource.ActiveRecord = wdLastRecord
+    Merge.Execute Pause:=False
+    
+    WordApp.ActiveDocument.SaveAs2 Filename:=ActiveWorkbook.Path & \test.pdf", FileFormat:=17
+
+'    WordApp.ActiveDocument.Close SaveChanges:=wdDoNotSaveChanges
+
+'WordApp.Quit
+
+End Sub
