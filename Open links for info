@@ -2,7 +2,7 @@ Sub OpenLinks()
 
 r = 2 ' Row.
 
-Do While Not IsEmpty(Cells(r, 1))
+Do While Not IsEmpty(Cells(r, 1)) ' Why didn't you use .End? I guess you want to check each row for something.
 
     If IsEmpty(Cells(r, 14)) Then
     
