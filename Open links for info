@@ -2,14 +2,28 @@ Sub OpenLinks()
 
 r = 2 ' Row.
 
-Do While Not IsEmpty(Cells(r, 1)) ' Why didn't you use .End? I guess you want to check each row for something.
+ActiveWindow.WindowState = xlMinimized
 
-    If IsEmpty(Cells(r, 14)) Then
+Do While Not IsEmpty(Cells(r, 1)) ' Why didn't you use .End? You're checking each row for something.
+
+    If Cells(r, 14) > 765446 Then Cells(r, 14).EntireRow.Hidden = True
+
+    If Not IsEmpty(Cells(r - 1, 14)) Then
     
-        ActiveWorkbook.FollowHyperlink Address:=Cells(r, 2).Value
-        Cells(r, 14) = InputBox("Question?", , , 10000, 2000) ' Latter values are box size. These aren't good, IIRC.
-        ActiveWorkbook.Save
+        If IsEmpty(Cells(r, 14)) Then
+        
+            Cells(r, 14).Select
     
+            ActiveWorkbook.FollowHyperlink Address:=Cells(r, 2).Value
+            Cells(r, 14) = InputBox("Question?", , , 10000, 2000)
+            ActiveWorkbook.Save
+            
+        End If
+        
+    Else:
+    
+        Exit Do
+        
     End If
     
     r = r + 1
