@@ -1,0 +1,19 @@
+Sub OpenLinks()
+
+r = 2 ' Row.
+
+Do While Not IsEmpty(Cells(r, 1))
+
+    If IsEmpty(Cells(r, 14)) Then
+    
+        ActiveWorkbook.FollowHyperlink Address:=Cells(r, 2).Value
+        Cells(r, 14) = InputBox("Question?", , , 10000, 2000) ' Latter values are box size. These aren't good, IIRC.
+        ActiveWorkbook.Save
+    
+    End If
+    
+    r = r + 1
+
+Loop
+   
+End Sub
