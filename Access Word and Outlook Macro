@@ -1,3 +1,5 @@
+' Microsoft Word from Tools/References needs to be selected. You kept missing its existence. Sigh.
+
 Sub PDFMailMerge()
 
 ' Using Word Object Library... Didn't work
