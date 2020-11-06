@@ -45,6 +45,11 @@ Merge.MainDocumentType = wdEMail ' wdNotAMergeDocument
             '.LastRecord = wdDefaultLastRecord ' These seem preset.
             ' .ActiveRecord = wdFirstRecord
             ' ActiveRecord is for showing each record at a time.
+	    Do ' This is a Do Until, not a Do While. Little bit different.
+	    If .ActiveRecord <> .RecordCount Then 
+ 	   .ActiveRecord = wdNextRecord 
+	   End If 
+	   Loop Until .ActiveRecord = .RecordCount 
 	   End With
         .SuppressBlankLines = True
         .Execute Pause:=False
