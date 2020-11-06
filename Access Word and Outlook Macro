@@ -40,19 +40,22 @@ Merge.MainDocumentType = wdEMail ' wdNotAMergeDocument
         SQLStatement:="SELECT * FROM `'sheet1$'`"
     With Merge
         .Destination = wdSendToNewDocument
+        .DataSource.FirstRecord = wdFirstRecord ' Need to set a range of records, else Last is always 1...
+        .DataSource.LastRecord = wdLastRecord
+        .DataSource.ActiveRecord = wdFirstRecord
         .SuppressBlankLines = True
         .Execute Pause:=False
     End With
 
-    ' It's saving as a DOCX... Why? wdFormatPDF doesn't work, while "17" does... Constants issues. Object Library doesn't seem to fix...
+    WordApp.ActiveDocument.Close SaveChanges:=wdDoNotSaveChanges
 
     Merge.DataSource.ActiveRecord = wdLastRecord
     Merge.Execute Pause:=False
     
-    WordApp.ActiveDocument.SaveAs2 Filename:=ActiveWorkbook.Path & \test.pdf", FileFormat:=17
+    WordApp.ActiveDocument.SaveAs2 Filename:=ActiveWorkbook.Path & \test.pdf", FileFormat:=wdFormatPDF
 
-'    WordApp.ActiveDocument.Close SaveChanges:=wdDoNotSaveChanges
+    WordApp.ActiveDocument.Close SaveChanges:=wdDoNotSaveChanges
 
-'WordApp.Quit
+WordApp.Quit
 
 End Sub
