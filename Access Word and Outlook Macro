@@ -41,7 +41,7 @@ Merge.MainDocumentType = wdEMail ' wdNotAMergeDocument
     With Merge
         .Destination = wdSendToNewDocument
         With .DataSource
-            '.FirstRecord = wdDefaultFirstRecord ' These seem preset.
+            '.FirstRecord = wdDefaultFirstRecord ' These seem preset.  ' So, this controls what is saved?! Why not ACTIVE?! Ugh. Need to keep NextRecord=ing this.
             '.LastRecord = wdDefaultLastRecord ' These seem preset.
             ' .ActiveRecord = wdFirstRecord
             ' ActiveRecord is for showing each record at a time.
