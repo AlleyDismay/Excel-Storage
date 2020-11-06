@@ -40,9 +40,12 @@ Merge.MainDocumentType = wdEMail ' wdNotAMergeDocument
         SQLStatement:="SELECT * FROM `'sheet1$'`"
     With Merge
         .Destination = wdSendToNewDocument
-        .DataSource.FirstRecord = wdFirstRecord ' Need to set a range of records, else Last is always 1...
-        .DataSource.LastRecord = wdLastRecord
-        .DataSource.ActiveRecord = wdFirstRecord
+        With .DataSource
+            '.FirstRecord = wdDefaultFirstRecord ' These seem preset.
+            '.LastRecord = wdDefaultLastRecord ' These seem preset.
+            ' .ActiveRecord = wdFirstRecord
+            ' ActiveRecord is for showing each record at a time.
+	   End With
         .SuppressBlankLines = True
         .Execute Pause:=False
     End With
